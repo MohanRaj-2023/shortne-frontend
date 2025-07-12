@@ -1,0 +1,24 @@
+// follow
+export const FOLLOW_REQUEST = 'FOLLOW_REQUEST'
+export const FOLLOW_SUCCESS = 'FOLLOW_SUCCESS'
+export const FOLLOW_FAIL    = 'FOLLOW_FAIL'
+
+// Unfollow
+export const UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST'
+export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS'
+export const UNFOLLOW_FAIL    = 'UNFOLLOW_FAIL'
+
+// follow status
+export const FOLLOW_STATUS_REQUEST = 'FOLLOW_STATUS_REQUEST'
+export const FOLLOW_STATUS_SUCCESS = 'FOLLOW_STATUS_SUCCESS'
+export const FOLLOW_STATUS_FAIL    = 'FOLLOW_STATUS_FAIL'
+
+// followers
+export const FOLLOWERS_REQUEST = 'FOLLOWERS_REQUEST'
+export const FOLLOWERS_SUCCESS = 'FOLLOWERS_SUCCESS'
+export const FOLLOWERS_FAIL    = 'FOLLOWERS_FAIL'
+
+// friends 
+export const FRIENDS_REQUEST = 'FRIENDS_REQUEST'
+export const FRIENDS_SUCCESS = 'FRIENDS_SUCCESS'
+export const FRIENDS_FAIL    = 'FRIENDS_FAIL'

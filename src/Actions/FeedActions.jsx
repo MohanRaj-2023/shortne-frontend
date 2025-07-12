@@ -1,0 +1,43 @@
+import api from '../Api/api'
+import { FEED_REQUEST, FEED_SUCCESS, FEED_FAIL } from '../Constants/FeedContext'
+
+
+export const FeedAction = (access_token, nextUrl = null) => async (dispatch) => {
+    try {
+        // console.log("➡️ Fetching feed...")
+        if (!nextUrl) {
+            dispatch({ type: FEED_REQUEST });
+        }
+
+
+        const config = {
+            'headers': {
+                Authorization: `Bearer ${access_token}`
+            }
+        }
+
+        const endpoint = nextUrl || `post/home/`;
+
+        const { data } = await api.get(endpoint, config)
+
+
+        // dispatch({
+        //     type: FEED_SUCCESS,
+        //     payload: data
+        // })
+
+        dispatch({
+            type: nextUrl ? 'FEED_APPEND_SUCCESS' : FEED_SUCCESS,
+            payload: {
+                feeds: data.results,
+                next: data.next,
+            },
+        });
+        console.log("Feed_Action:",data)
+    } catch (error) {
+        dispatch({
+            type: FEED_FAIL,
+            error: error.response?.data?.details || "Can't fetch feeds"
+        })
+    }
+}

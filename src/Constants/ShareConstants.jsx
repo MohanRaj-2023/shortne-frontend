@@ -1,0 +1,5 @@
+// post share
+
+export const SHARE_POST_REQUEST = 'SHARE_POST_REQUEST'
+export const SHARE_POST_SUCCESS = 'SHARE_POST_SUCCESS'
+export const SHARE_POST_FAIL    = 'SHARE_POST_FAIL'
