@@ -1,4 +1,4 @@
-import {SIGNUP_REQUEST,SIGNUP_SUCCESS,SIGNUP_FAIL} from '../Constants/SignupConstants'
+import {SIGNUP_REQUEST,SIGNUP_SUCCESS,SIGNUP_FAIL} from '../Constants/signupConstants'
 import api from '../Api/api'
 
 export const SignupAction = (email,username,password)=>async (dispatch)=>{
