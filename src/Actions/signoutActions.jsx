@@ -69,10 +69,13 @@ export const DeleteAccountAction = (refresh_token,access_token)=>async(dispatch)
             payload:data
         })
 
+        console.log("Account delete success:",data)
+
     }catch(error){
         dispatch({
             type:DELETE_ACCOUNT_FAIL,
             error:error?.request?.data?.error || 'Unable to delete your account'
         })
+        console.log("Account delete Fail:",error)
     }
 }
