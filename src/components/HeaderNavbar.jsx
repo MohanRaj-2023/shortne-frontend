@@ -126,15 +126,20 @@ const HeaderNavbar = () => {
     if(userinfo){
       const refresh_token = userinfo.refresh
       const access_token = userinfo.access
-      // localStorage.removeItem('userinfo')
       dispatch(DeleteAccountAction(refresh_token,access_token))
-      navigate('/signin')
     }
   }
 
   const {deleteaccount,error:deleteerror,loading:deleteloading} = useSelector((state)=>state.DeleteAccount) 
 
-
+  useEffect(()=>{
+    if(deleteaccount && userinfo){
+        const refresh_token = userinfo.refresh
+        const access_token = userinfo.access
+        dispatch(SignoutAction(refresh_token, access_token))
+        navigate('/signin')
+    }
+  },[deleteaccount,dispatch,navigate])
 
   // console.log("Profileinfo_Home screen:",profileinfo)
   return (
@@ -247,7 +252,7 @@ const HeaderNavbar = () => {
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={signout_handler} >Logout</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={delete_handler} className='text-danger' >Delete Account</NavDropdown.Item>
+                  <NavDropdown.Item onClick={delete_handler} className='text-danger' >{deleteloading ? 'Deleting...' : 'Delete Account'}</NavDropdown.Item>
                   </NavDropdown>
               ) : (
 
