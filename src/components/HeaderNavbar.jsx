@@ -55,7 +55,7 @@ const HeaderNavbar = () => {
 
   const unread_messages = useSelector((state) => state.Unreadmsgcount?.payload)
 
-  
+
   console.log("Unread_notificount:", unread_notifications)
 
   // const {unread_messages} = useSelector((state)=>state.Unreadcounts)
@@ -113,177 +113,180 @@ const HeaderNavbar = () => {
 
   // console.log("Logedin_uername:",userinfo?.username)
   const { profileinfo, loading } = useSelector((state) => state.Profileinfo)
-  const [userprofileimg,setUserprofileimg]=useState(null)
+  const [userprofileimg, setUserprofileimg] = useState(null)
 
-  useEffect(()=>{
-    if(profileinfo?.username===userinfo?.username){
+  useEffect(() => {
+    if (profileinfo?.username === userinfo?.username) {
       setUserprofileimg(profileinfo?.image)
     }
   })
 
   // delete_handler
-  const delete_handler = ()=>{
-    if(userinfo){
-      const refresh_token = userinfo.refresh
-      const access_token = userinfo.access
-      dispatch(DeleteAccountAction(refresh_token,access_token))
+  const refreshRef = useRef(null);
+  const accessRef = useRef(null);
+
+  const delete_handler = () => {
+    if (userinfo) {
+      refreshRef.current = userinfo.refresh
+      accessRef.current = userinfo.access
+      dispatch(DeleteAccountAction(userinfo.refresh, userinfo.access))
     }
   }
 
-  const {deleteaccount,error:deleteerror,loading:deleteloading} = useSelector((state)=>state.DeleteAccount) 
+  const { deleteaccount, error: deleteerror, loading: deleteloading } = useSelector((state) => state.DeleteAccount)
 
-  useEffect(()=>{
-    if(deleteaccount && userinfo){
-        const refresh_token = userinfo.refresh
-        const access_token = userinfo.access
-        dispatch(SignoutAction(refresh_token, access_token))
-        navigate('/signin')
+  useEffect(() => {
+    if (deleteaccount) {
+      const refresh_token = refreshRef.current;
+      const access_token = accessRef.current;
+      dispatch(SignoutAction(refresh_token, access_token))
+      navigate('/signin')
     }
-  },[deleteaccount,dispatch,navigate])
+  }, [deleteaccount, dispatch, navigate])
 
   // console.log("Profileinfo_Home screen:",profileinfo)
   return (
 
     <>
-        <Navbar className='bg-body-tertiary fixed-top shadow-sm z-3 ' expand='md'>
-      <Container fluid>
-        <div className="row w-100 align-items-center">
-          {/* App name */}
-          {/* Brand - Left */}
-          <div className="col-2 col-md-2 text-start  d-flex align-items-center">
-            <NavbarBrand className=' d-flex align-items-center gap-2' as={Link} to="/">
-              {/* Image logo (visible only below md) */}
-              <img
-                src="/shortne-favicon-32x32.png"
-                alt="Shortne Logo"
-                className="d-block d-md-none"
-                style={{ height: '40px', objectFit: 'contain' }}
-              />
-              <span className="d-none d-md-block" style={{
-                fontFamily: "'Righteous', sans-serif",
-                fontWeight: 700,
-                fontSize: '1.8rem',
-                letterSpacing: '0.5px',
-                color: '#FFD700', // Bright yellow
-                textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
-              }}>
-                Shortne
-              </span>
-            </NavbarBrand>
+      <Navbar className='bg-body-tertiary fixed-top shadow-sm z-3 ' expand='md'>
+        <Container fluid>
+          <div className="row w-100 align-items-center">
+            {/* App name */}
+            {/* Brand - Left */}
+            <div className="col-2 col-md-2 text-start  d-flex align-items-center">
+              <NavbarBrand className=' d-flex align-items-center gap-2' as={Link} to="/">
+                {/* Image logo (visible only below md) */}
+                <img
+                  src="/shortne-favicon-32x32.png"
+                  alt="Shortne Logo"
+                  className="d-block d-md-none"
+                  style={{ height: '40px', objectFit: 'contain' }}
+                />
+                <span className="d-none d-md-block" style={{
+                  fontFamily: "'Righteous', sans-serif",
+                  fontWeight: 700,
+                  fontSize: '1.8rem',
+                  letterSpacing: '0.5px',
+                  color: '#FFD700', // Bright yellow
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+                }}>
+                  Shortne
+                </span>
+              </NavbarBrand>
+            </div>
+
+            {/* search bar */}
+            {/* Search Bar - Centered */}
+            <div className="col-8 col-md-9 text-center " >
+              <Form className='w-100'>
+                <Form.Control
+                  type='search'
+                  placeholder='search...'
+                  // style={{ width: "200px" }}
+                  value={query}
+                  className=''
+                  onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handlesearch(e)}
+                  // style={{ maxWidth: '250px', margin: '0 auto' }}
+                  style={{ minWidth: '185px', maxWidth: '250px', margin: '0 auto' }}
+                />
+              </Form>
+            </div>
+
+            {/* Post create modal */}
+            {/* Toggle + Icons - Right */}
+            <div className="col-2 col-md-2 text-end">
+              <Navbar.Toggle
+                style={{
+                  padding: '0.25rem 0.5rem',
+                  fontSize: '0.9rem',
+                  borderRadius: '4px',
+                  border: '1px solid #ccc',
+                  backgroundColor: '#f8f9fa',
+                }}></Navbar.Toggle>
+            </div>
+
           </div>
 
-          {/* search bar */}
-          {/* Search Bar - Centered */}
-          <div className="col-8 col-md-9 text-center " >
-            <Form className='w-100'>
-              <Form.Control
-                type='search'
-                placeholder='search...'
-                // style={{ width: "200px" }}
-                value={query}
-                className=''
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handlesearch(e)}
-                // style={{ maxWidth: '250px', margin: '0 auto' }}
-                style={{ minWidth: '185px', maxWidth: '250px', margin: '0 auto' }}
-              />
-            </Form>
-          </div>
+          {/* offcanvas */}
 
-          {/* Post create modal */}
-          {/* Toggle + Icons - Right */}
-          <div className="col-2 col-md-2 text-end">
-            <Navbar.Toggle
-              style={{
-                padding: '0.25rem 0.5rem',
-                fontSize: '0.9rem',
-                borderRadius: '4px',
-                border: '1px solid #ccc',
-                backgroundColor: '#f8f9fa',
-              }}></Navbar.Toggle>
-          </div>
+          <Navbar.Offcanvas placement='end' >
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>Shortne</Offcanvas.Title>
+            </Offcanvas.Header>
 
-        </div>
+            <Offcanvas.Body>
+              <Nav>
+                <Nav.Link as={Link} to={'/messenger'} className='mx-2'>
+                  <div className='icon-wrapper position-relative'>
+                    <i className='fa-solid fa-message' style={{ cursor: 'pointer' }}></i>
+                    {unread_messages > 0 && (
+                      <span className="badge rounded-circle bg-danger position-absolute top-0 start-100 translate-middle">
+                        {unread_messages}
+                      </span>
+                    )}
+                  </div>
+                </Nav.Link>
+                <Nav.Link className='mx-2'>
+                  <div className='icon-wrapper position-relative'>
+                    <i className='fa-solid fa-bell' onClick={handleNotification} style={{ cursor: 'pointer' }}></i>
+                    {unread_notifications > 0 && (
+                      <span className="badge rounded-circle bg-danger position-absolute top-0 start-100 translate-middle">
+                        {unread_notifications}
+                      </span>
+                    )}
+                  </div>
+                </Nav.Link>
 
-        {/* offcanvas */}
-
-        <Navbar.Offcanvas placement='end' >
-          <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Shortne</Offcanvas.Title>
-          </Offcanvas.Header>
-
-          <Offcanvas.Body>
-            <Nav>
-              <Nav.Link as={Link} to={'/messenger'} className='mx-2'>
-                <div className='icon-wrapper position-relative'>
-                  <i className='fa-solid fa-message' style={{ cursor: 'pointer' }}></i>
-                  {unread_messages > 0 && (
-                    <span className="badge rounded-circle bg-danger position-absolute top-0 start-100 translate-middle">
-                      {unread_messages}
-                    </span>
-                  )}
-                </div>
-              </Nav.Link>
-              <Nav.Link className='mx-2'>
-                <div className='icon-wrapper position-relative'>
-                  <i className='fa-solid fa-bell' onClick={handleNotification} style={{ cursor: 'pointer' }}></i>
-                  {unread_notifications > 0 && (
-                    <span className="badge rounded-circle bg-danger position-absolute top-0 start-100 translate-middle">
-                      {unread_notifications}
-                    </span>
-                  )}
-                </div>
-              </Nav.Link>
-
-              {signin ? (
-                <NavDropdown title={<span id="basic-nav-dropdown">
-                  <img
-                    src={userprofileimg ? `${userprofileimg}` : '/defaultimg.jpg'}
-                    alt="Profile"
-                    style={{
-                      width: "32px",
-                      height: "32px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </span>} drop='start' className='' >
-                  <NavDropdown.Item as={Link} to={`/profile/${userinfo.username}`}>Profile</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={signout_handler} >Logout</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={delete_handler} className='text-danger' >{deleteloading ? 'Deleting...' : 'Delete Account'}</NavDropdown.Item>
+                {signin ? (
+                  <NavDropdown title={<span id="basic-nav-dropdown">
+                    <img
+                      src={userprofileimg ? `${userprofileimg}` : '/defaultimg.jpg'}
+                      alt="Profile"
+                      style={{
+                        width: "32px",
+                        height: "32px",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </span>} drop='start' className='' >
+                    <NavDropdown.Item as={Link} to={`/profile/${userinfo.username}`}>Profile</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item onClick={signout_handler} >Logout</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item onClick={delete_handler} className='text-danger' >{deleteloading ? 'Deleting...' : 'Delete Account'}</NavDropdown.Item>
                   </NavDropdown>
-              ) : (
+                ) : (
 
-                <NavDropdown title={<span id="basic-nav-dropdown"><i className='fa-solid fa-user'></i></span>} drop='start' className='' >
-                  <NavDropdown.Item as={Link} to='/signup'>Signup</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to='/signin'>Signin</NavDropdown.Item>
-                </NavDropdown>
-              )
-
-
-              }
-            </Nav>
+                  <NavDropdown title={<span id="basic-nav-dropdown"><i className='fa-solid fa-user'></i></span>} drop='start' className='' >
+                    <NavDropdown.Item as={Link} to='/signup'>Signup</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item as={Link} to='/signin'>Signin</NavDropdown.Item>
+                  </NavDropdown>
+                )
 
 
-          </Offcanvas.Body>
+                }
+              </Nav>
 
-        </Navbar.Offcanvas>
 
-        {/* Notification */}
-        {
-          shownot ? (
-            <Notification show={shownot} handleClose={() => Setshownot((prev) => !prev)} />
-          ) :
-            showfollowers ? (
-              <Friendslist show={showfollowers} handleClose={() => Setshowfollowers((prev) => !prev)} />
-            ) : ''
-        }
+            </Offcanvas.Body>
 
-        {/* icons for sm screen */}
-        {/* <div className="mx-auto mt-2 overflow-auto d-md-none" style={{ whiteSpace: 'nowrap' }}>
+          </Navbar.Offcanvas>
+
+          {/* Notification */}
+          {
+            shownot ? (
+              <Notification show={shownot} handleClose={() => Setshownot((prev) => !prev)} />
+            ) :
+              showfollowers ? (
+                <Friendslist show={showfollowers} handleClose={() => Setshowfollowers((prev) => !prev)} />
+              ) : ''
+          }
+
+          {/* icons for sm screen */}
+          {/* <div className="mx-auto mt-2 overflow-auto d-md-none" style={{ whiteSpace: 'nowrap' }}>
           <Nav className='d-flex flex-row d-md-none gap-5' style={{ minWidth: 'max-content' }}>
             <Nav.Link as={Link} to="/" active ><span><i className='fa-solid fa-house'></i></span></Nav.Link>
             <Nav.Link as={Link} onClick={() => Setshowfollowers((prev) => !prev)} ><span><i className='fa-solid fa-user-group'></i></span></Nav.Link>
@@ -292,9 +295,9 @@ const HeaderNavbar = () => {
           </Nav>
         </div> */}
 
-      </Container>
-    </Navbar>
-            {/* ✅ Bottom nav bar for small screens only */}
+        </Container>
+      </Navbar>
+      {/* ✅ Bottom nav bar for small screens only */}
       <div className="d-md-none fixed-bottom bg-white border-top py-2 shadow-sm">
         <Nav className="d-flex justify-content-around align-items-center">
           <Nav.Link as={Link} to="/" active><i className='fa-solid fa-house text-dark'></i></Nav.Link>
@@ -304,7 +307,7 @@ const HeaderNavbar = () => {
         </Nav>
       </div>
     </>
-        
+
   )
 }
 
