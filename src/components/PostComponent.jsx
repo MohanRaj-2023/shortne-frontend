@@ -69,6 +69,7 @@ const PostComponent = ({ Post, onInteraction }) => {
     const handleDescription = () => onInteraction('description', Post)
 
     const [loaded, setLoaded] = useState(false)
+    const [error, setError] = useState(false)
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -180,10 +181,18 @@ const PostComponent = ({ Post, onInteraction }) => {
                                 onError={() => {
                                     console.error("Video load failed.");
                                     setLoaded(true);
+                                    setError(true);
                                 }}
                             />
 
-
+                            {/* ⛔ Overlay if video failed */}
+                            {error && (
+                                <div className="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-light"
+                                    style={{ zIndex: 2 }}>
+                                    <span className="text-danger fw-semibold">⚠️ Video cannot be played or format not supported</span>
+                                </div>
+                            )}
+                            
                         </div>
 
 
