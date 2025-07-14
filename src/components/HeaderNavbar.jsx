@@ -19,6 +19,7 @@ import useMessagesocket from '../utils/useMessagesocket'
 import { UnreadAction } from '../Actions/NotificationActions'
 
 import Friendslist from './Followerslist'
+import { DeleteAccountAction } from '../Actions/signoutActions'
 
 const HeaderNavbar = () => {
   const dispatch = useDispatch()
@@ -120,7 +121,19 @@ const HeaderNavbar = () => {
     }
   })
 
-  
+  // delete_handler
+  const delete_handler = ()=>{
+    if(userinfo){
+      const refresh_token = userinfo.refresh
+      const access_token = userinfo.access
+      dispatch(DeleteAccountAction(refresh_token,access_token))
+      navigate('/signin')
+    }
+  }
+
+  const {deleteaccount,error:deleteerror,loading:deleteloading} = useSelector((state)=>state.DeleteAccount) 
+
+
 
   // console.log("Profileinfo_Home screen:",profileinfo)
   return (
@@ -232,7 +245,9 @@ const HeaderNavbar = () => {
                   <NavDropdown.Item as={Link} to={`/profile/${userinfo.username}`}>Profile</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={signout_handler} >Logout</NavDropdown.Item>
-                </NavDropdown>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={delete_handler} className='text-danger' >Delete Account</NavDropdown.Item>
+                  </NavDropdown>
               ) : (
 
                 <NavDropdown title={<span id="basic-nav-dropdown"><i className='fa-solid fa-user'></i></span>} drop='start' className='' >

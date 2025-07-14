@@ -6,7 +6,7 @@ import { composeWithDevTools } from '@redux-devtools/extension';
 // Reducers
 import { SignupReducer } from './Reducers/SignupReducers'
 import { SigninReducers } from './Reducers/signinReducers'
-import { SignoutReducer } from './Reducers/signoutReducers'
+import { SignoutReducer, DeleteAccountReducer } from './Reducers/signoutReducers'
 import { ResetpasswordReducer } from './Reducers/ResetpasswordReducers'
 import { NewpasswordReducer } from './Reducers/NewpasswordReducers'
 import { ProfileEditReducer, ProfileinfoReducer } from './Reducers/UserprofileReducers'
@@ -71,7 +71,8 @@ const reducer = combineReducers({
     Unreadcounts : UnreadReducer,
     MarkRead : MarknotireadReducer,
     Editpost : PostEditReducer,
-    Deletepost : PostDeleteReducer
+    Deletepost : PostDeleteReducer,
+    DeleteAccount : DeleteAccountReducer
 })
 
 const initialState={
