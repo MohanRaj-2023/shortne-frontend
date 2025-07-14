@@ -104,7 +104,16 @@ const PostComponent = ({ Post, onInteraction }) => {
                 <Link to={`/profile/${Post.username}`} style={{ textDecoration: 'none', marginLeft: '10px', color: 'black', fontFamily: 'Inter' }}>{Post.username} </Link>
 
             </Card.Header>
-            <Card.Body className='position-relative p-0'>
+            <Card.Body className='position-relative p-0' 
+            style={{
+                                width: '100%',
+                                height: '400px', // set fixed height
+                                position: 'relative',
+                                backgroundColor: '#f1f1f1',
+                                borderRadius: '10px',
+                                overflow: 'hidden',
+                            }}
+            >
                 {
                     !loaded && (
                         <div className='d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 bg-white'
@@ -115,15 +124,7 @@ const PostComponent = ({ Post, onInteraction }) => {
                 }
                 <div>
                     {Post.media_type == 'image' ? (
-                        <div className='h-100'
-                            style={{
-                                width: '100%',
-                                height: '400px', // set fixed height
-                                position: 'relative',
-                                backgroundColor: '#f1f1f1',
-                                borderRadius: '10px',
-                                overflow: 'hidden',
-                            }}>
+                        <div className='h-100'>
                             <Card.Img
                                 src={`${Post.media}`}
                                 onLoad={() => setLoaded(true)}
@@ -187,12 +188,12 @@ const PostComponent = ({ Post, onInteraction }) => {
 
                             {/* ⛔ Overlay if video failed */}
                             {error && (
-                                <div className="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-light"
+                                <div className="text-center position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-light"
                                     style={{ zIndex: 2 }}>
-                                    <span className="text-danger fw-semibold">⚠️ Video cannot be played or format not supported</span>
+                                    <span className="text-danger fw-semibold text-center">⚠️ Video cannot be played or format not supported</span>
                                 </div>
                             )}
-                            
+
                         </div>
 
 
