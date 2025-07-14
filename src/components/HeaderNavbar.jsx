@@ -128,16 +128,12 @@ const HeaderNavbar = () => {
       const access_token = userinfo.access
       localStorage.removeItem('userinfo')
       dispatch(DeleteAccountAction(refresh_token,access_token))
+      navigate('/signin')
     }
   }
 
   const {deleteaccount,error:deleteerror,loading:deleteloading} = useSelector((state)=>state.DeleteAccount) 
 
-  useEffect(()=>{
-    if(deleteaccount){
-      navigate('/signin')
-    }
-  },[deleteaccount,dispatch])
 
 
   // console.log("Profileinfo_Home screen:",profileinfo)
