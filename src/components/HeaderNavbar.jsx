@@ -142,7 +142,7 @@ const HeaderNavbar = () => {
       dispatch(SignoutAction(refresh_token, access_token))
       navigate('/signin')
     }
-  }, [deleteaccount])
+  }, [accountdelete])
 
   // console.log("Profileinfo_Home screen:",profileinfo)
   return (
