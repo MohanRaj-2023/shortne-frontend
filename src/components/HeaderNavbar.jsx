@@ -134,7 +134,7 @@ const HeaderNavbar = () => {
   }
 
   const { deleteaccount, error: deleteerror, loading: deleteloading } = useSelector((state) => state.DeleteAccount)
-
+  console.log("Delete_Account:",deleteaccount)
   useEffect(() => {
     if (deleteaccount) {
       const refresh_token = refreshRef.current;
