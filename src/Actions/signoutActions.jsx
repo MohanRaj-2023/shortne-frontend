@@ -59,6 +59,9 @@ export const DeleteAccountAction = (refresh_token,access_token)=>async(dispatch)
             }
         )
 
+        // Clear from localStorage
+        localStorage.removeItem('userinfo')
+        
         dispatch({
             type:DELETE_ACCOUNT_SUCCESS,
             payload:data
