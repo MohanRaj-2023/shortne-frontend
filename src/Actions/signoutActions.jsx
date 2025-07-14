@@ -47,6 +47,8 @@ export const DeleteAccountAction = (refresh_token,access_token)=>async(dispatch)
             type:DELETE_ACCOUNT_REQUEST
         })
 
+        console.log("Access:",access_token)
+        console.log("Refresh:",refresh_token)
         const {data} = await api.delete(`user/delete-account`,
             {
                 'refresh':refresh_token
