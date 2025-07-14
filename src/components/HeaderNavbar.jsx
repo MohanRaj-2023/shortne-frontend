@@ -139,6 +139,7 @@ const HeaderNavbar = () => {
     if (accountdelete) {
       const refresh_token = refreshRef.current;
       const access_token = accessRef.current;
+      localStorage.removeItem('userinfo')
       dispatch(SignoutAction(refresh_token, access_token))
       navigate('/signin')
     }
