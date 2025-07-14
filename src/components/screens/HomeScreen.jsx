@@ -109,7 +109,7 @@ const HomeScreen = () => {
   
   return (
     <Container className="d-flex justify-content-center align-items-center mt-5" style={{ minHeight: '100vh' }}>
-      <div  className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: '600px', width: '100%'}} >
+      <div className="d-flex flex-column align-items-center justify-content-center"  style={{maxWidth: '600px', width: '100%'}} >
               {Array.isArray(feeds) &&
         feeds.map((post, index) => (
           <div key={post.id || index} className="w-100 mb-2">

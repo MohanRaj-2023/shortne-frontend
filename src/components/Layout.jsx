@@ -9,7 +9,7 @@ const Layout = ({ openPostModal, handleFollowersList }) => {
       <div className="d-none d-md-block">
         <VerticalNavbar openPostModal={openPostModal} handleFollowersList={handleFollowersList} />
       </div>
-      <div style={{ marginLeft: '70px', padding: '56px', width: '100%' }}>
+      <div style={{  paddingTop: '56px', width: '100%' }}>
         <HeaderNavbar />
         <Outlet />
       </div>

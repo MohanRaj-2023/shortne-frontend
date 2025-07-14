@@ -155,7 +155,7 @@ const HeaderNavbar = () => {
 
           {/* search bar */}
           {/* Search Bar - Centered */}
-          <div className="col-8 col-md-8 text-center " style={{ marginRight: "0px" }}>
+          <div className="col-8 col-md-9 text-center " >
             <Form className='w-100'>
               <Form.Control
                 type='search'
@@ -190,7 +190,7 @@ const HeaderNavbar = () => {
 
         <Navbar.Offcanvas placement='end' >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Zone</Offcanvas.Title>
+            <Offcanvas.Title>Shortne</Offcanvas.Title>
           </Offcanvas.Header>
 
           <Offcanvas.Body>
