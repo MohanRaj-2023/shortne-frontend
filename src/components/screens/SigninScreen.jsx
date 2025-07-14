@@ -81,7 +81,7 @@ const SigninScreen = () => {
               alt='sigin-banner'
               fluid
               rounded
-              style={{ maxidth: '100%' }} 
+              style={{ maxWidth: '100%' }} 
               />
           </Col>
 

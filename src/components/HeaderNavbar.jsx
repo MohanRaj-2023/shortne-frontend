@@ -126,6 +126,7 @@ const HeaderNavbar = () => {
     if(userinfo){
       const refresh_token = userinfo.refresh
       const access_token = userinfo.access
+      localStorage.removeItem('userinfo')
       dispatch(DeleteAccountAction(refresh_token,access_token))
     }
   }
