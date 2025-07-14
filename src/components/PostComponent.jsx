@@ -114,7 +114,15 @@ const PostComponent = ({ Post, onInteraction }) => {
                 }
                 <div>
                     {Post.media_type == 'image' ? (
-                        <div className='h-100'>
+                        <div className='h-100'
+                            style={{
+                                width: '100%',
+                                height: '400px', // set fixed height
+                                position: 'relative',
+                                backgroundColor: '#f1f1f1',
+                                borderRadius: '10px',
+                                overflow: 'hidden',
+                            }}>
                             <Card.Img
                                 src={`${Post.media}`}
                                 onLoad={() => setLoaded(true)}
@@ -124,6 +132,7 @@ const PostComponent = ({ Post, onInteraction }) => {
                                     objectFit: 'cover',
                                     borderRadius: '10px',
                                     maxHeight: '100%',
+                                    display: loaded ? 'block' : 'none'
                                 }}
                             />
 
@@ -168,6 +177,10 @@ const PostComponent = ({ Post, onInteraction }) => {
                                 }}
                                 onLoadStart={() => setLoaded(false)}
                                 onLoadedData={() => setLoaded(true)}
+                                onError={() => {
+                                    console.error("Video load failed.");
+                                    setLoaded(true);
+                                }}
                             />
 
 
