@@ -104,16 +104,7 @@ const PostComponent = ({ Post, onInteraction }) => {
                 <Link to={`/profile/${Post.username}`} style={{ textDecoration: 'none', marginLeft: '10px', color: 'black', fontFamily: 'Inter' }}>{Post.username} </Link>
 
             </Card.Header>
-            <Card.Body className='position-relative p-0' 
-            style={{
-                                width: '100%',
-                                height: '400px', // set fixed height
-                                position: 'relative',
-                                backgroundColor: '#f1f1f1',
-                                borderRadius: '10px',
-                                overflow: 'hidden',
-                            }}
-            >
+            <Card.Body className='position-relative p-0'>
                 {
                     !loaded && (
                         <div className='d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 bg-white'
@@ -124,7 +115,15 @@ const PostComponent = ({ Post, onInteraction }) => {
                 }
                 <div>
                     {Post.media_type == 'image' ? (
-                        <div className='h-100'>
+                        <div className='h-100'
+                            style={{
+                                width: '100%',
+                                height: !loaded ? '400px' : 'auto', // set fixed height
+                                position: 'relative',
+                                backgroundColor: '#f1f1f1',
+                                borderRadius: '10px',
+                                overflow: 'hidden',
+                            }}>
                             <Card.Img
                                 src={`${Post.media}`}
                                 onLoad={() => setLoaded(true)}
