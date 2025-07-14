@@ -19,7 +19,12 @@ export const SignoutReducer = (state={},actions)=>{
 
 
 // Delete account
-export const DeleteAccountReducer = (state={},actions)=>{
+const initialState = {
+    accountdelete:false,
+    loading:false,
+    error:null
+}
+export const DeleteAccountReducer = (state=initialState,actions)=>{
     switch(actions.type){
         case DELETE_ACCOUNT_REQUEST:
             return {loading:true}
