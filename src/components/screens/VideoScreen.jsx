@@ -90,7 +90,7 @@ const VideoScreen = () => {
         )
     }
     return (
-        <Container className="d-flex justify-content-center align-items-center mt-5">
+        <Container className="d-flex justify-content-center align-items-center mt-5 mb-3">
             <div className="d-flex flex-column align-items-center" style={{ maxWidth: '600px', width: '100%' }} >
                 {video_posts?.length > 0 && (
                     video_posts.map((post, index) => (
