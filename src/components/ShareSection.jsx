@@ -80,7 +80,7 @@ const ShareSection = ({handleClose,show,post}) => {
                             <span className='fw-bold'>{user.username}</span>
                             
                         </div>
-                        <Form.Check onClick={handleselecteduser} value={user.id} checked={selectedids.includes(user.id)}/>
+                        <Form.Check onClick={handleselecteduser} value={user.user} checked={selectedids.includes(user.user)}/>
                     </Card.Body>
                   </Card>
                 </div>
