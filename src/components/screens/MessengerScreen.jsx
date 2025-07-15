@@ -311,10 +311,10 @@ const MessengerScreen = () => {
 
 
     return (
-        <Container fluid className='mt-5' style={{ height: '100vh', overflow: 'hidden' }}>
+        <Container fluid className='mt-5 mb-5' style={{ height: '100vh', overflow: 'hidden' }}>
             <Row className="h-100">
                 <Col md={4} className="bg-white d-none d-md-block" style={{ height: '100%', marginLeft: '80px' }}>
-                    <Card style={{ height: '100%' }} className='mb-2'>
+                    <Card style={{ height: '100%' }} className='mb-3'>
                         <Card.Body style={{ overflowY: 'auto', height: '100%' }}>
                             <div className="mb-3">
                                 <b>Zone Messenger</b>
@@ -475,7 +475,7 @@ const MessengerScreen = () => {
                 {
                     user ? (
                         <Col style={{ height: '100%' }}>
-                            <Card style={{ height: '100%' }} >
+                            <Card style={{ height: '100%' }} className='mb-3' >
                                 <div className="d-flex gap-3 p-3">
                                     <Image
                                         src={`${user.image}`}
