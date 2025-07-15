@@ -45,7 +45,7 @@ const ShareSection = ({handleClose,show,post}) => {
   const handleshare = ()=>{
     console.log("Share tringerr.....")
     dispatch(SharepostAction(access_token, post, selectedids, sharemsg, socketRef, userinfo))
-
+    console.log("Selected_id:",selectedids)
     Setsharemsg('')
     Setselectedids([])
     handleClose();
