@@ -72,7 +72,7 @@ const ShareSection = ({handleClose,show,post}) => {
                     <Card.Body className='p-2 d-flex align-items-center justify-content-between px-3'>
                         <div className="d-flex align-items-center gap-3">
                                 <Image
-                                src={`http://127.0.0.1:8000${user.image}`}
+                                src={`${user.image}`}
                                 className='rounded-circle'
                                 height='40'
                                 width='40'
