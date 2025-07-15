@@ -94,7 +94,7 @@ const VideoScreen = () => {
             <div className="d-flex flex-column align-items-center" style={{ maxWidth: '600px', width: '100%' }} >
                 {video_posts?.length > 0 && (
                     video_posts.map((post, index) => (
-                        <div className="w-100" key={post.id}>
+                        <div className="w-100 mb-2" key={post.id}>
                             <PostComponent Post={post} onInteraction={HandleInteraction} />
 
                             {showdescription && selectedpost.id === post.id && (
