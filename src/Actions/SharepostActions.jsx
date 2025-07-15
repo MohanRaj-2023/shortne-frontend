@@ -15,8 +15,8 @@ export const SharepostAction = (access_token, post, selectedUserIds, message, so
 
       const chatId = data.chat_id;
 
-      // 2. Open a temporary socket and send the message
-      const socket = new WebSocket(`ws://127.0.0.1:8000/ws/chat/${chatId}/?token=${access_token}&target_id=${user2_id}`);
+      // 2. Open a temporary socket and send the message ws://127.0.0.1:8000
+      const socket = new WebSocket(`wss://shortne-backend.onrender.com/ws/chat/${chatId}/?token=${access_token}&target_id=${user2_id}`);
 
       socket.onopen = () => {
         socket.send(
