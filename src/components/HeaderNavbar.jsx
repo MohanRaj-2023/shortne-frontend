@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Container, Row, Col, Navbar, Nav, NavbarBrand, Form, Button, NavDropdown, Offcanvas, Modal } from 'react-bootstrap'
 import '../App.css'
 import { Link, useNavigate } from 'react-router-dom'
@@ -134,7 +134,7 @@ const HeaderNavbar = () => {
   }
 
   const { accountdelete, error: deleteerror, loading: deleteloading } = useSelector((state) => state.DeleteAccount)
-  console.log("Delete_Account:",accountdelete)
+  console.log("Delete_Account:", accountdelete)
   useEffect(() => {
     if (accountdelete) {
       const refresh_token = refreshRef.current;
@@ -147,7 +147,7 @@ const HeaderNavbar = () => {
 
   const [showCanvas, setShowCanvas] = useState(false);
 
-  const handleshowmessenger=()=>{
+  const handleshowmessenger = () => {
 
   }
   // console.log("Profileinfo_Home screen:",profileinfo)
@@ -218,7 +218,7 @@ const HeaderNavbar = () => {
           {/* offcanvas */}
 
           <Navbar.Offcanvas placement='end' show={showCanvas}
-  onHide={() => setShowCanvas(false)} >
+            onHide={() => setShowCanvas(false)} >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title>Shortne</Offcanvas.Title>
             </Offcanvas.Header>
@@ -259,7 +259,7 @@ const HeaderNavbar = () => {
                       }}
                     />
                   </span>} drop='start' className='' >
-                    <NavDropdown.Item as={Link} to={`/profile/${userinfo.username}`}>Profile</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to={`/profile/${userinfo.username}`} onClick={() => setShowCanvas(false)}>Profile</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={signout_handler} >Logout</NavDropdown.Item>
                     <NavDropdown.Divider />
