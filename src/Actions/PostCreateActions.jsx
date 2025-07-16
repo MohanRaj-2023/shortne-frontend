@@ -30,12 +30,14 @@ export const PostCreateAction = (access_token,formData)=> async (dispatch)=>{
 
     }
     catch(error){
+        console.log("post create error data:",error.response?.data)
+        console.log("post create Error:",error.response?.data?.error)
         dispatch({
             type:POST_CREATE_FAIL,
             error:error.response?.data?.error || "Unable to create a post..."
         })
     }
-    console.log("post create error:",data)
+
 }
 
 // Edit
