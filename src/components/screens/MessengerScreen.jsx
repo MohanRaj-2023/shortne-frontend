@@ -13,7 +13,7 @@ import { UnreadmessagecountAction } from '../../Actions/MessageActions'
 import { LastmessageAction } from '../../Actions/MessageActions'
 
 import Lottie from 'lottie-react'
-import FormLoader from '../assets/animations/formloader.json'
+import FormLoader from '../../assets/animations/formloader.json'
 
 import { Link } from 'react-router-dom'
 
