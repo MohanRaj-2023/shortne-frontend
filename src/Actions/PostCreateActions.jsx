@@ -22,13 +22,11 @@ export const PostCreateAction = (access_token,formData)=> async (dispatch)=>{
                }
         )
 
-
+        console.log("post create success:",data)
         dispatch({
             type:POST_CREATE_SUCCESS,
-            payload:data
+            payload:data.details
         })
-
-        console.log("post create success:",data)
 
     }
     catch(error){
