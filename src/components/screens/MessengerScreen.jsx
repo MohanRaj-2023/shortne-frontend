@@ -12,6 +12,9 @@ import { UseronlinestatusAction } from '../../Actions/MessageActions'
 import { UnreadmessagecountAction } from '../../Actions/MessageActions'
 import { LastmessageAction } from '../../Actions/MessageActions'
 
+import Lottie from 'lottie-react'
+import FormLoader from '../assets/animations/formloader.json'
+
 import { Link } from 'react-router-dom'
 
 const MessengerScreen = () => {
@@ -38,7 +41,7 @@ const MessengerScreen = () => {
     // const unreadCounts = useSelector((state) => state.Unreadmsgcount?.payload || {});
 
     console.log("Unread_Messagecount reduxcount:----------------", reduxUnreadCounts)
-    
+
 
 
     useEffect(() => {
@@ -55,7 +58,7 @@ const MessengerScreen = () => {
     };
     console.log("Unread_Messagecount local count:----------------", localUnreadCounts)
 
-    const {friends,loading,error} = useSelector((state) => state.Friendslist)
+    const { friends, loading, error } = useSelector((state) => state.Friendslist)
     console.log("Friends:", friends)
 
     const OnlineStatus = useSelector((state) => state.Onlinestatus?.payload || [])
@@ -75,7 +78,7 @@ const MessengerScreen = () => {
     const heartbeatIntervalRef = useRef(null);
     const [socketConnected, setSocketConnected] = useState(false);
 
-    
+
 
     useEffect(() => {
         if (user && user.id) {
@@ -86,7 +89,7 @@ const MessengerScreen = () => {
 
     // console.log("Chat_USER_ONLINE:", chatUserOnline)
 
-    console.log("receiver_info:",user?.user)
+    console.log("receiver_info:", user?.user)
     useEffect(() => {
         if (access_token && user?.user) dispatch(ChatidAction(access_token, user.user))
     }, [access_token, user?.id])
@@ -99,7 +102,7 @@ const MessengerScreen = () => {
         setChatUserOnline(false); // Reset to offline when new chat starts
     }, [chatId]);
 
-//    console.log("Messaging with:",user)
+    //    console.log("Messaging with:",user)
     useEffect(() => {
         if (!chatId || !user) return
         if (socketRef.current) {
@@ -158,7 +161,7 @@ const MessengerScreen = () => {
                     )
                 );
 
-              // Also update fetched messages
+                // Also update fetched messages
                 setFetchedmessages(prev =>
                     prev.map(msg =>
                         readIds.includes(msg.id) ? { ...msg, is_read: true } : msg
@@ -220,7 +223,7 @@ const MessengerScreen = () => {
     }, [chatId, user, access_token])
 
     // console.log("Messages:",Realtimemessages)
-    
+
     const sendMessage = () => {
         if (message.trim() === '') return;
 
@@ -319,75 +322,80 @@ const MessengerScreen = () => {
                             <div className="mb-3">
                                 <b>Zone Messenger</b>
                             </div>
-                            {Array.isArray(friends) && friends.length > 0 ? (
-                                [...friends]
-                                    .map(friend => {
-                                        const lastChat = chatList.find(chat => chat.friend.id === friend.user);
-                                        console.log("last_chat:",lastChat)
-                                        // const lastTimestamp = lastChat?.last_message?.timestamp || lastChat?.last_message?.created_at || '';
-                                        const lastTimestamp = lastChat?.last_message?.timestamp || lastChat?.last_message?.created_at || '1970-01-01T00:00:00Z';
+                            {loading ? (
+                                <div className="d-flex justify-content-center align-items-center w-100 h-100" style={{ marginTop: "10px" }}>
+                                    <Lottie animationData={FormLoader} loop={true} style={{ width: 50 }} />
+                                </div>
+                            ) :
+                                Array.isArray(friends) && friends.length > 0 ? (
+                                    [...friends]
+                                        .map(friend => {
+                                            const lastChat = chatList.find(chat => chat.friend.id === friend.user);
+                                            console.log("last_chat:", lastChat)
+                                            // const lastTimestamp = lastChat?.last_message?.timestamp || lastChat?.last_message?.created_at || '';
+                                            const lastTimestamp = lastChat?.last_message?.timestamp || lastChat?.last_message?.created_at || '1970-01-01T00:00:00Z';
 
-                                        return {
-                                            ...friend,
-                                            lastTimestamp,
-                                            lastMessage: lastChat?.last_message?.content || 'No messages yet'
-                                        };
-                                    })
-                                    .sort((a, b) => new Date(b.lastTimestamp) - new Date(a.lastTimestamp))
-                                    .map((user, index) => {
-                                        
-                                        const unreadCount = localUnreadCounts[user.user] || reduxUnreadCounts[user.user] || 0;
-                                      
+                                            return {
+                                                ...friend,
+                                                lastTimestamp,
+                                                lastMessage: lastChat?.last_message?.content || 'No messages yet'
+                                            };
+                                        })
+                                        .sort((a, b) => new Date(b.lastTimestamp) - new Date(a.lastTimestamp))
+                                        .map((user, index) => {
 
-                                        return (
-                                            <div key={user.id}>
-                                                <div
-                                                    className="gap-3 d-flex align-items-center justify-content-between mb-3"
-                                                    style={{ cursor: 'pointer' }}
-                                                    onClick={() => {
-                                                        Setuser(user);
-                                                        setLocalUnreadCounts(prev => {
-                                                            const updated = { ...prev };
-                                                            delete updated[user.id];
-                                                            return updated;
-                                                        });
-                                                    }}
-                                                >
-                                                    <div className="d-flex align-items-center gap-2">
-                                                        <div className="position-relative">
-                                                            <Image
-                                                                src={`${user.image}`}
-                                                                height="40"
-                                                                width="40"
-                                                                className="rounded-circle"
-                                                            />
-                                                            {unreadCount > 0 && (
-                                                                <span
-                                                                    className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"
-                                                                    style={{ width: '10px', height: '10px' }}
-                                                                ></span>
-                                                            )}
-                                                        </div>
-                                                        <div>
-                                                            <div className="fw-bold">{user.username}</div>
-                                                            <div className="text-muted small" style={{ maxWidth: '150px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-                                                                {user.lastMessage}
+                                            const unreadCount = localUnreadCounts[user.user] || reduxUnreadCounts[user.user] || 0;
+
+
+                                            return (
+                                                <div key={user.id}>
+                                                    <div
+                                                        className="gap-3 d-flex align-items-center justify-content-between mb-3"
+                                                        style={{ cursor: 'pointer' }}
+                                                        onClick={() => {
+                                                            Setuser(user);
+                                                            setLocalUnreadCounts(prev => {
+                                                                const updated = { ...prev };
+                                                                delete updated[user.id];
+                                                                return updated;
+                                                            });
+                                                        }}
+                                                    >
+                                                        <div className="d-flex align-items-center gap-2">
+                                                            <div className="position-relative">
+                                                                <Image
+                                                                    src={`${user.image}`}
+                                                                    height="40"
+                                                                    width="40"
+                                                                    className="rounded-circle"
+                                                                />
+                                                                {unreadCount > 0 && (
+                                                                    <span
+                                                                        className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"
+                                                                        style={{ width: '10px', height: '10px' }}
+                                                                    ></span>
+                                                                )}
+                                                            </div>
+                                                            <div>
+                                                                <div className="fw-bold">{user.username}</div>
+                                                                <div className="text-muted small" style={{ maxWidth: '150px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                                                                    {user.lastMessage}
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                        <small className="text-muted">
+                                                            {user.lastTimestamp ? new Date(user.lastTimestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
+                                                        </small>
                                                     </div>
-                                                    <small className="text-muted">
-                                                        {user.lastTimestamp ? new Date(user.lastTimestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
-                                                    </small>
+                                                    {index !== friends.length - 1 && <hr />}
                                                 </div>
-                                                {index !== friends.length - 1 && <hr />}
-                                            </div>
-                                        );
-                                    })
-                            ) : (
-                                <div className="text-center text-muted mt-5">
-                                    You don’t have any friends yet.
-                                </div>
-                            )}
+                                            );
+                                        })
+                                ) : (
+                                    <div className="text-center text-muted mt-5">
+                                        You don’t have any friends yet.
+                                    </div>
+                                )}
 
 
                         </Card.Body>
@@ -401,8 +409,13 @@ const MessengerScreen = () => {
                             <div className="mb-3">
                                 <b>Zone Messenger</b>
                             </div>
-                            {Array.isArray(friends) && friends.length > 0 ? (
-                               
+                            {loading ? (
+                                <div className="d-flex justify-content-center align-items-center w-100 h-100" style={{ marginTop: "10px" }}>
+                                    <Lottie animationData={FormLoader} loop={true} style={{ width: 50 }} />
+                                </div>
+                            ):
+                            Array.isArray(friends) && friends.length > 0 ? (
+
                                 [...friends]
                                     .map(friend => {
                                         const lastChat = chatList.find(chat => chat.friend.id === friend.user);

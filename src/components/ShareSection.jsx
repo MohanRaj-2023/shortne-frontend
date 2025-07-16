@@ -5,14 +5,16 @@ import { FriendsAction } from '../Actions/FollowActions'
 import { use } from 'react'
 // share post action
 import { SharepostAction } from '../Actions/SharepostActions'
+import Lottie from 'lottie-react'
+import FormLoader from '../assets/animations/formloader.json'
 
 const ShareSection = ({handleClose,show,post}) => {
   console.log("Seleted_post:",post)
   const dispatch=useDispatch()
   const userinfo = useSelector((state) => state.UserSigninReducer?.userinfo)
   const access_token = userinfo?.access
-  const friends_list = useSelector((state)=>state.Friendslist?.friendslist?.details)
-  console.log("Friends_list:",friends_list)
+  const {friends,loading,error} = useSelector((state)=>state.Friendslist)
+  console.log("Friends_list:",friends)
 
   useEffect(()=>{
       dispatch(FriendsAction(access_token))
@@ -61,8 +63,10 @@ const ShareSection = ({handleClose,show,post}) => {
         
         <Offcanvas.Body>
           {
-            friends_list === undefined?(
-              <p>Loading...</p>
+            loading?(
+              <div className="d-flex justify-content-center align-items-center w-100 h-100" style={{ marginTop: "10px" }}>
+                  <Lottie animationData={FormLoader} loop={true} style={{ width: 50 }} />
+              </div>
             ):
             friends_list.length>0?(
               friends_list.map((user,index)=>(
