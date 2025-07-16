@@ -55,7 +55,7 @@ const MessengerScreen = () => {
     };
     console.log("Unread_Messagecount local count:----------------", localUnreadCounts)
 
-    const friends = useSelector((state) => state.Friendslist?.friendslist?.details)
+    const {friends,loading,error} = useSelector((state) => state.Friendslist)
     console.log("Friends:", friends)
 
     const OnlineStatus = useSelector((state) => state.Onlinestatus?.payload || [])
@@ -402,6 +402,7 @@ const MessengerScreen = () => {
                                 <b>Zone Messenger</b>
                             </div>
                             {Array.isArray(friends) && friends.length > 0 ? (
+                               
                                 [...friends]
                                     .map(friend => {
                                         const lastChat = chatList.find(chat => chat.friend.id === friend.user);

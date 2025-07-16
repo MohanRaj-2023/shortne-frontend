@@ -75,7 +75,7 @@ export const FriendsReducer = (state={},action)=>{
         case FRIENDS_REQUEST:
             return {...state,loading:true,error:null}
         case FRIENDS_SUCCESS:
-            return {...state,loading:false,friendslist:action.payload}
+            return {...state,loading:false,friends:action.payload.details}
         case FRIENDS_FAIL:
             return {...state,loading:false,error:action.error}
         default:
