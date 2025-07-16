@@ -28,6 +28,8 @@ export const PostCreateAction = (access_token,formData)=> async (dispatch)=>{
             payload:data
         })
 
+        console.log("post create success:",data)
+
     }
     catch(error){
         dispatch({
@@ -35,6 +37,7 @@ export const PostCreateAction = (access_token,formData)=> async (dispatch)=>{
             error:error.response?.data?.error || "Unable to create a post..."
         })
     }
+    console.log("post create error:",data)
 }
 
 // Edit
