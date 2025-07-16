@@ -169,13 +169,13 @@ const Postcreatemodal = () => {
   // // Postcreated
   const [postfail, setPostfail] = useState(false)
   useEffect(() => {
-    if (payload && payload?.details) {
+    if (payload) {
       Setpostcreated(true)
     }
-    else if (payload && payload?.error) {
+    else if (error) {
       setPostfail(true)
     }
-  }, [payload])
+  }, [payload,error])
 
   console.log("Payload:==========", payload)
    console.log("Post_create_error:==========", error)
@@ -308,8 +308,8 @@ const Postcreatemodal = () => {
 
           {
             postcreated ? (
-              <p className='text-success text-center'>{payload?.details}</p>
-            ) : error ? (
+              <p className='text-success text-center'>{payload}</p>
+            ) : postfail ? (
               <p className='text-danger text-center'>{error}</p>
             ) : (
               ''
