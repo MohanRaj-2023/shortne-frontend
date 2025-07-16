@@ -145,6 +145,11 @@ const HeaderNavbar = () => {
     }
   }, [accountdelete])
 
+  const [showCanvas, setShowCanvas] = useState(false);
+
+  const handleshowmessenger=()=>{
+
+  }
   // console.log("Profileinfo_Home screen:",profileinfo)
   return (
 
@@ -198,6 +203,7 @@ const HeaderNavbar = () => {
             {/* Toggle + Icons - Right */}
             <div className="col-2 col-md-2 text-end">
               <Navbar.Toggle
+                onClick={() => setShowCanvas(true)}
                 style={{
                   padding: '0.25rem 0.5rem',
                   fontSize: '0.9rem',
@@ -211,14 +217,15 @@ const HeaderNavbar = () => {
 
           {/* offcanvas */}
 
-          <Navbar.Offcanvas placement='end' >
+          <Navbar.Offcanvas placement='end' show={showCanvas}
+  onHide={() => setShowCanvas(false)} >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title>Shortne</Offcanvas.Title>
             </Offcanvas.Header>
 
             <Offcanvas.Body>
               <Nav>
-                <Nav.Link as={Link} to={'/messenger'} className='mx-2'>
+                <Nav.Link as={Link} to={'/messenger'} className='mx-2' onClick={() => setShowCanvas(false)}>
                   <div className='icon-wrapper position-relative'>
                     <i className='fa-solid fa-message' style={{ cursor: 'pointer' }}></i>
                     {unread_messages > 0 && (
@@ -228,7 +235,7 @@ const HeaderNavbar = () => {
                     )}
                   </div>
                 </Nav.Link>
-                <Nav.Link className='mx-2'>
+                <Nav.Link className='mx-2' onClick={() => setShowCanvas(false)}>
                   <div className='icon-wrapper position-relative'>
                     <i className='fa-solid fa-bell' onClick={handleNotification} style={{ cursor: 'pointer' }}></i>
                     {unread_notifications > 0 && (
@@ -286,20 +293,10 @@ const HeaderNavbar = () => {
               ) : ''
           }
 
-          {/* icons for sm screen */}
-          {/* <div className="mx-auto mt-2 overflow-auto d-md-none" style={{ whiteSpace: 'nowrap' }}>
-          <Nav className='d-flex flex-row d-md-none gap-5' style={{ minWidth: 'max-content' }}>
-            <Nav.Link as={Link} to="/" active ><span><i className='fa-solid fa-house'></i></span></Nav.Link>
-            <Nav.Link as={Link} onClick={() => Setshowfollowers((prev) => !prev)} ><span><i className='fa-solid fa-user-group'></i></span></Nav.Link>
-            <Nav.Link as={Link} to="/video" ><span><i className='fa-solid fa-video'></i></span></Nav.Link>
-            <Nav.Link onClick={openPostModal}  ><span><i className='fa-solid fa-square-plus'></i></span></Nav.Link>
-          </Nav>
-        </div> */}
-
         </Container>
       </Navbar>
       {/* ✅ Bottom nav bar for small screens only */}
-      <div className="d-md-none fixed-bottom bg-white border-top py-2 shadow-sm">
+      <div className="d-md-none fixed-bottom bg-white border-top py-2 shadow-sm mt-3">
         <Nav className="d-flex justify-content-around align-items-center">
           <Nav.Link as={Link} to="/" active><i className='fa-solid fa-house text-dark'></i></Nav.Link>
           <Nav.Link onClick={() => Setshowfollowers((prev) => !prev)}><i className='fa-solid fa-user-group text-dark'></i></Nav.Link>
