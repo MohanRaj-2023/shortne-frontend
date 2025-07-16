@@ -307,7 +307,7 @@ const Postcreatemodal = () => {
           </Form>
 
           {
-            payload ? (
+            postcreated ? (
               <p className='text-success text-center'>{payload?.details}</p>
             ) : error ? (
               <p className='text-danger text-center'>{error}</p>
