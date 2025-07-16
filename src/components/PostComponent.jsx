@@ -105,14 +105,7 @@ const PostComponent = ({ Post, onInteraction }) => {
 
             </Card.Header>
             <Card.Body className='position-relative p-0'>
-                {
-                    !loaded && (
-                        <div className='d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 bg-white'
-                            style={{ zIndex: 1 }}>
-                            <Lottie animationData={VideoLoader} loop={true} style={{ width: '50px' }} />
-                        </div>
-                    )
-                }
+
                 <div>
                     {Post.media_type == 'image' ? (
                         <div className='h-100'
@@ -124,6 +117,14 @@ const PostComponent = ({ Post, onInteraction }) => {
                                 borderRadius: '10px',
                                 overflow: 'hidden',
                             }}>
+                            {
+                                !loaded && (
+                                    <div className='d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 bg-white'
+                                        style={{ zIndex: 1 }}>
+                                        <Lottie animationData={VideoLoader} loop={true} style={{ width: '50px' }} />
+                                    </div>
+                                )
+                            }
                             <Card.Img
                                 src={`${Post.media}`}
                                 onLoad={() => setLoaded(true)}
@@ -140,7 +141,15 @@ const PostComponent = ({ Post, onInteraction }) => {
                         </div>
 
                     ) : (
-                        <div className='ratio ratio-16x9 w-100'>
+                        <div className='position-relative ratio ratio-16x9 w-100'>
+                            {
+                                !loaded && (
+                                    <div className='d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 bg-white'
+                                        style={{ zIndex: 1 }}>
+                                        <Lottie animationData={VideoLoader} loop={true} style={{ width: '50px' }} />
+                                    </div>
+                                )
+                            }
 
                             <video
                                 ref={Videoref}

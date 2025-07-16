@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom'
 const Layout = ({ openPostModal, handleFollowersList }) => {
   return (
     <div className='d-flex'>
-      <div className="d-none d-md-block">
+      <div className="d-none d-md-block mt-5">
         <VerticalNavbar openPostModal={openPostModal} handleFollowersList={handleFollowersList} />
       </div>
       <div style={{  paddingTop: '56px', width: '100%' }}>
