@@ -274,9 +274,9 @@ const Postcreatemodal = () => {
                           return false; // ✅ Optional: prevents default behavior
                         }}
 
-                        style={{ maxWidth: '100%' }}
+                        style={{ maxWidth: '500px' }}
                         imageStyle={{
-                          maxWidth: '100%',
+                          maxWidth: '500px',
                           maxHeight: '500px', // adjust based on UI
                           objectFit: 'contain', // 🔑 This ensures full image is visible
                         }}
