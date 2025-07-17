@@ -111,7 +111,7 @@ const PostComponent = ({ Post, onInteraction }) => {
                         <div className='h-100'
                             style={{
                                 width: '100%',
-                                height: !loaded ? '400px' : 'auto', // set fixed height
+                                height: !loaded ? '400px' : 'cover', // set fixed height
                                 position: 'relative',
                                 backgroundColor: '#f1f1f1',
                                 borderRadius: '10px',
@@ -210,9 +210,13 @@ const PostComponent = ({ Post, onInteraction }) => {
 
 
             </Card.Body>
-            <Card.Footer>
-                <Interactionbar onLike={() => handleLike(Post.id)} liked={reactstate} onDislike={() => handleDislike(Post.id)} onShare={handleShare} onCommant={handleCommant} onDescription={handleDescription} like_count={like_count} dislike_count={dislike_count} />
-            </Card.Footer>
+            {
+                !loaded && (
+                    <Card.Footer>
+                        <Interactionbar onLike={() => handleLike(Post.id)} liked={reactstate} onDislike={() => handleDislike(Post.id)} onShare={handleShare} onCommant={handleCommant} onDescription={handleDescription} like_count={like_count} dislike_count={dislike_count} />
+                    </Card.Footer>
+                )
+            }
         </Card>
 
     )
