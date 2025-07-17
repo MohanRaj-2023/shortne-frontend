@@ -18,21 +18,12 @@ const Postcreatemodal = () => {
   // const [File, setFile] = useState(null)
   const [selectedFile, setSelectedFile] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
-  // const [crop, setCrop] = useState({
-  //   unit: '%',
-  //   width: 100,
-  //   aspect: 1,
-  // });
-
+  // const [crop, setCrop] = useState({ unit: '%', width: 100, aspect: 1 }); // 1:1 Instagram-style
   const [crop, setCrop] = useState({
-    unit: 'px',
-    x: 10,
-    y: 10,
-    width: 200,
-    height: 200,
+    unit: '%',
+    width: 100,
     aspect: 1,
   });
-
 
 
   const [completedCrop, setCompletedCrop] = useState(null);
@@ -63,7 +54,7 @@ const Postcreatemodal = () => {
       setPreview(blobURL);
     }
     setCrop({
-      unit: 'px',
+      unit: '%',
       x: 10,
       y: 10,
       height: 50,
@@ -74,24 +65,6 @@ const Postcreatemodal = () => {
 
   // console.log("File:", File)
 
-  // const handleCropChange = useCallback((newCrop) => {
-  //   if (!imgRef.current) {
-  //     setCrop(newCrop);
-  //     return;
-  //   }
-
-  //   const image = imgRef.current;
-  //   const maxCropX = (image.naturalWidth - (newCrop.width / 100) * image.naturalWidth) / image.naturalWidth * 100;
-  //   const maxCropY = (image.naturalHeight - (newCrop.height / 100) * image.naturalHeight) / image.naturalHeight * 100;
-
-  //   const clampedCrop = {
-  //     ...newCrop,
-  //     x: Math.min(newCrop.x ?? 0, maxCropX),
-  //     y: Math.min(newCrop.y ?? 0, maxCropY),
-  //   };
-
-  //   setCrop(clampedCrop);
-  // }, []);
 
 
   const getCroppedImg = () => {
@@ -103,8 +76,6 @@ const Postcreatemodal = () => {
         resolve(null);
         return;
       }
-
-      const outputSize = 500;
 
       const canvas = document.createElement('canvas');
       const scaleX = image.naturalWidth / image.width;
@@ -122,8 +93,8 @@ const Postcreatemodal = () => {
         crop.height * scaleY,
         0,
         0,
-        outputSize,
-        outputSize
+        crop.width * scaleX,
+        crop.height * scaleY
       );
 
       canvas.toBlob((blob) => {
@@ -135,53 +106,6 @@ const Postcreatemodal = () => {
       }, 'image/jpeg');
     });
   };
-  // const getCroppedImg = () => {
-  //   return new Promise((resolve) => {
-  //     const image = imgRef.current;
-  //     const crop = completedCrop;
-
-  //     if (!image || !crop?.width || !crop?.height) {
-  //       resolve(null);
-  //       return;
-  //     }
-
-  //     const scaleX = image.naturalWidth / image.width;
-  //     const scaleY = image.naturalHeight / image.height;
-
-  //     const cropX = Math.max(0, crop.x * scaleX);
-  //     const cropY = Math.max(0, crop.y * scaleY);
-  //     const cropWidth = Math.min(crop.width * scaleX, image.naturalWidth - cropX);
-  //     const cropHeight = Math.min(crop.height * scaleY, image.naturalHeight - cropY);
-
-  //     const canvas = document.createElement('canvas');
-  //     const outputSize = 500;
-  //     canvas.width = outputSize;
-  //     canvas.height = outputSize;
-  //     const ctx = canvas.getContext('2d');
-
-  //     // white background
-  //     ctx.fillStyle = '#fff';
-  //     ctx.fillRect(0, 0, outputSize, outputSize);
-
-  //     ctx.drawImage(
-  //       image,
-  //       cropX,
-  //       cropY,
-  //       cropWidth,
-  //       cropHeight,
-  //       0,
-  //       0,
-  //       outputSize,
-  //       outputSize
-  //     );
-
-  //     canvas.toBlob((blob) => {
-  //       const file = new File([blob], 'cropped.jpg', { type: 'image/jpeg' });
-  //       setCroppedImage(URL.createObjectURL(blob));
-  //       resolve(file);
-  //     }, 'image/jpeg');
-  //   });
-  // };
 
   console.log("File is:", File);
 
@@ -228,7 +152,7 @@ const Postcreatemodal = () => {
       console.log("finalImage instanceof File:", finalImage instanceof File);
       console.log("finalImage.name:", finalImage.name);
 
-
+      
       const file = formData.get('media');
 
       if (file) {
@@ -347,20 +271,17 @@ const Postcreatemodal = () => {
                           console.log("✅ onImageLoaded triggered");
                           imgRef.current = img; // ✅ This is mandatory
                           setImageLoaded(true);
-                          // return false; // ✅ Optional: prevents default behavior
+                          return false; // ✅ Optional: prevents default behavior
                         }}
 
-                        // style={{ maxWidth: '100%' }}
+                        style={{ maxWidth: '100%' }}
                         imageStyle={{
                           maxWidth: '100%',
                           maxHeight: '500px', // adjust based on UI
-                          // objectFit: 'contain', // 🔑 This ensures full image is visible
+                          objectFit: 'contain', // 🔑 This ensures full image is visible
                         }}
                         className="react-crop-container"
                         src={Preview}
-                        aspect={1} // optional: 1:1 square
-                        minWidth={50}
-                        minHeight={50}
                       />
 
 
