@@ -65,8 +65,67 @@ const Postcreatemodal = () => {
 
   // console.log("File:", File)
 
+  const handleCropChange = useCallback((newCrop) => {
+    if (!imgRef.current) {
+      setCrop(newCrop);
+      return;
+    }
+
+    const image = imgRef.current;
+    const maxCropX = (image.naturalWidth - (newCrop.width / 100) * image.naturalWidth) / image.naturalWidth * 100;
+    const maxCropY = (image.naturalHeight - (newCrop.height / 100) * image.naturalHeight) / image.naturalHeight * 100;
+
+    const clampedCrop = {
+      ...newCrop,
+      x: Math.min(newCrop.x ?? 0, maxCropX),
+      y: Math.min(newCrop.y ?? 0, maxCropY),
+    };
+
+    setCrop(clampedCrop);
+  }, []);
 
 
+  // const getCroppedImg = () => {
+  //   return new Promise((resolve) => {
+  //     const image = imgRef.current;
+  //     const crop = completedCrop;
+
+  //     if (!image || !crop?.width || !crop?.height) {
+  //       resolve(null);
+  //       return;
+  //     }
+
+  //     const outputSize = 500;
+
+  //     const canvas = document.createElement('canvas');
+  //     const scaleX = image.naturalWidth / image.width;
+  //     const scaleY = image.naturalHeight / image.height;
+
+  //     canvas.width = crop.width * scaleX;
+  //     canvas.height = crop.height * scaleY;
+  //     const ctx = canvas.getContext('2d');
+
+  //     ctx.drawImage(
+  //       image,
+  //       crop.x * scaleX,
+  //       crop.y * scaleY,
+  //       crop.width * scaleX,
+  //       crop.height * scaleY,
+  //       0,
+  //       0,
+  //       outputSize,
+  //       outputSize
+  //     );
+
+  //     canvas.toBlob((blob) => {
+  //       // const file = new File([blob], 'cropped.jpg', { type: 'image/jpeg' });
+  //       const file = new window.File([blob], 'cropped.jpg', { type: 'image/jpeg' });
+
+  //       setCroppedImage(URL.createObjectURL(blob));
+  //       resolve(file);
+  //     }, 'image/jpeg');
+  //   });
+  // };
   const getCroppedImg = () => {
     return new Promise((resolve) => {
       const image = imgRef.current;
@@ -77,22 +136,30 @@ const Postcreatemodal = () => {
         return;
       }
 
-      const outputSize = 500;
-      
-      const canvas = document.createElement('canvas');
       const scaleX = image.naturalWidth / image.width;
       const scaleY = image.naturalHeight / image.height;
 
-      canvas.width = crop.width * scaleX;
-      canvas.height = crop.height * scaleY;
+      const cropX = Math.max(0, crop.x * scaleX);
+      const cropY = Math.max(0, crop.y * scaleY);
+      const cropWidth = Math.min(crop.width * scaleX, image.naturalWidth - cropX);
+      const cropHeight = Math.min(crop.height * scaleY, image.naturalHeight - cropY);
+
+      const canvas = document.createElement('canvas');
+      const outputSize = 500;
+      canvas.width = outputSize;
+      canvas.height = outputSize;
       const ctx = canvas.getContext('2d');
+
+      // white background
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, outputSize, outputSize);
 
       ctx.drawImage(
         image,
-        crop.x * scaleX,
-        crop.y * scaleY,
-        crop.width * scaleX,
-        crop.height * scaleY,
+        cropX,
+        cropY,
+        cropWidth,
+        cropHeight,
         0,
         0,
         outputSize,
@@ -100,9 +167,7 @@ const Postcreatemodal = () => {
       );
 
       canvas.toBlob((blob) => {
-        // const file = new File([blob], 'cropped.jpg', { type: 'image/jpeg' });
-        const file = new window.File([blob], 'cropped.jpg', { type: 'image/jpeg' });
-
+        const file = new File([blob], 'cropped.jpg', { type: 'image/jpeg' });
         setCroppedImage(URL.createObjectURL(blob));
         resolve(file);
       }, 'image/jpeg');
@@ -154,7 +219,7 @@ const Postcreatemodal = () => {
       console.log("finalImage instanceof File:", finalImage instanceof File);
       console.log("finalImage.name:", finalImage.name);
 
-      
+
       const file = formData.get('media');
 
       if (file) {
@@ -266,7 +331,7 @@ const Postcreatemodal = () => {
                       <ReactCrop
                         key={Preview}
                         crop={crop}
-                        onChange={setCrop}
+                        onChange={handleCropChange}
                         onComplete={setCompletedCrop}
                         onImageLoaded={(img) => {
                           console.log("Image:", img)
