@@ -140,13 +140,31 @@ const Postcreatemodal = () => {
         return;
       }
 
+      const file = formData.get('media');
+
+      if (file) {
+        const isImage = file.type.startsWith("image/");
+        const isVideo = file.type.startsWith("video/");
+
+        if (isImage && file.size > 5 * 1024 * 1024) {
+          alert("Image must be less than 5MB.");
+          return;
+        }
+
+        if (isVideo && file.size > 9 * 1024 * 1024) {
+          alert("Video must be less than 9MB.");
+          return;
+        }
+      }
+
+
       // ✅ Construct formData with description, query, and media
       const formData = new FormData();
       formData.append('description', description);
       formData.append('query', query); // 🔄 replace hashtagsids
       formData.append('media', finalImage);
 
-      console.log("media:",finalImage)
+      console.log("media:", finalImage)
       console.log("Seletced File:", selectedFile)
       console.log("typeof finalImage:", typeof finalImage);
       console.log("finalImage instanceof File:", finalImage instanceof File);
@@ -175,10 +193,10 @@ const Postcreatemodal = () => {
     else if (error) {
       setPostfail(true)
     }
-  }, [payload,error])
+  }, [payload, error])
 
   console.log("Payload:==========", payload)
-   console.log("Post_create_error:==========", error)
+  console.log("Post_create_error:==========", error)
 
   const Cancelhandler = (e) => {
     setPreview(null);
