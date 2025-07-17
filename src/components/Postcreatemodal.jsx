@@ -18,12 +18,21 @@ const Postcreatemodal = () => {
   // const [File, setFile] = useState(null)
   const [selectedFile, setSelectedFile] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
-  // const [crop, setCrop] = useState({ unit: '%', width: 100, aspect: 1 }); // 1:1 Instagram-style
+  // const [crop, setCrop] = useState({
+  //   unit: '%',
+  //   width: 100,
+  //   aspect: 1,
+  // });
+
   const [crop, setCrop] = useState({
-    unit: '%',
-    width: 100,
+    unit: 'px',
+    x: 10,
+    y: 10,
+    width: 200,
+    height: 200,
     aspect: 1,
   });
+
 
 
   const [completedCrop, setCompletedCrop] = useState(null);
@@ -54,7 +63,7 @@ const Postcreatemodal = () => {
       setPreview(blobURL);
     }
     setCrop({
-      unit: '%',
+      unit: 'px',
       x: 10,
       y: 10,
       height: 50,
@@ -338,17 +347,20 @@ const Postcreatemodal = () => {
                           console.log("✅ onImageLoaded triggered");
                           imgRef.current = img; // ✅ This is mandatory
                           setImageLoaded(true);
-                          return false; // ✅ Optional: prevents default behavior
+                          // return false; // ✅ Optional: prevents default behavior
                         }}
 
-                        style={{ maxWidth: '100%' }}
+                        // style={{ maxWidth: '100%' }}
                         imageStyle={{
                           maxWidth: '100%',
                           maxHeight: '500px', // adjust based on UI
-                          objectFit: 'contain', // 🔑 This ensures full image is visible
+                          // objectFit: 'contain', // 🔑 This ensures full image is visible
                         }}
                         className="react-crop-container"
                         src={Preview}
+                        aspect={1} // optional: 1:1 square
+                        minWidth={50}
+                        minHeight={50}
                       />
 
 
