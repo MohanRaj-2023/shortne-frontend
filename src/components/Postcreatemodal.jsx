@@ -140,6 +140,19 @@ const Postcreatemodal = () => {
         return;
       }
 
+      // ✅ Construct formData with description, query, and media
+      const formData = new FormData();
+      formData.append('description', description);
+      formData.append('query', query); // 🔄 replace hashtagsids
+      formData.append('media', finalImage);
+
+      console.log("media:", finalImage)
+      console.log("Seletced File:", selectedFile)
+      console.log("typeof finalImage:", typeof finalImage);
+      console.log("finalImage instanceof File:", finalImage instanceof File);
+      console.log("finalImage.name:", finalImage.name);
+
+      
       const file = formData.get('media');
 
       if (file) {
@@ -156,19 +169,6 @@ const Postcreatemodal = () => {
           return;
         }
       }
-
-
-      // ✅ Construct formData with description, query, and media
-      const formData = new FormData();
-      formData.append('description', description);
-      formData.append('query', query); // 🔄 replace hashtagsids
-      formData.append('media', finalImage);
-
-      console.log("media:", finalImage)
-      console.log("Seletced File:", selectedFile)
-      console.log("typeof finalImage:", typeof finalImage);
-      console.log("finalImage instanceof File:", finalImage instanceof File);
-      console.log("finalImage.name:", finalImage.name);
 
 
       dispatch(PostCreateAction(access_token, formData))
