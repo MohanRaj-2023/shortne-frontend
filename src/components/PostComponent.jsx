@@ -211,7 +211,7 @@ const PostComponent = ({ Post, onInteraction }) => {
 
             </Card.Body>
             {
-                !loaded && (
+             loaded && (
                     <Card.Footer>
                         <Interactionbar onLike={() => handleLike(Post.id)} liked={reactstate} onDislike={() => handleDislike(Post.id)} onShare={handleShare} onCommant={handleCommant} onDescription={handleDescription} like_count={like_count} dislike_count={dislike_count} />
                     </Card.Footer>
