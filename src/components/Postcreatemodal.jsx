@@ -10,7 +10,6 @@ import 'react-image-crop/dist/ReactCrop.css';
 import Lottie from 'lottie-react'
 import Pipeloader from '../assets/animations/pipeloader.json'
 
-
 const Postcreatemodal = () => {
   const { showPostModal, closePostModal } = usePostModal()
 
@@ -274,9 +273,9 @@ const Postcreatemodal = () => {
                           return false; // ✅ Optional: prevents default behavior
                         }}
 
-                        style={{ maxWidth: '500px' }}
+                        style={{ maxWidth: '100%' }}
                         imageStyle={{
-                          maxWidth: '500px',
+                          maxWidth: '100%',
                           maxHeight: '500px', // adjust based on UI
                           objectFit: 'contain', // 🔑 This ensures full image is visible
                         }}
