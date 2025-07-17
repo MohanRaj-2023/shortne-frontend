@@ -77,6 +77,8 @@ const Postcreatemodal = () => {
         return;
       }
 
+      const outputSize = 500;
+      
       const canvas = document.createElement('canvas');
       const scaleX = image.naturalWidth / image.width;
       const scaleY = image.naturalHeight / image.height;
@@ -93,8 +95,8 @@ const Postcreatemodal = () => {
         crop.height * scaleY,
         0,
         0,
-        crop.width * scaleX,
-        crop.height * scaleY
+        outputSize,
+        outputSize
       );
 
       canvas.toBlob((blob) => {
