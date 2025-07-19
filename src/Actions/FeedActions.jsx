@@ -21,8 +21,13 @@ export const FeedAction = (access_token, nextUrl = null) => async (dispatch) => 
 
         // const { data } = await api.get(endpoint, config)
         console.log("Next URL:", nextUrl)
-        const { data } = await (nextUrl
-            ? axios.get(nextUrl, config) // use full URL directly
+
+        const secureNextUrl = nextUrl?.startsWith('http://')
+            ? nextUrl.replace('http://', 'https://')
+            : nextUrl;
+
+        const { data } = await (secureNextUrl
+            ? axios.get(secureNextUrl, config) // use full URL directly
             : api.get('post/home/', config) // relative for first page
         );
 
