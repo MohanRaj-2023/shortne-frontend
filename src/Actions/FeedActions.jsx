@@ -1,3 +1,4 @@
+import axios from 'axios'
 import api from '../Api/api'
 import { FEED_REQUEST, FEED_SUCCESS, FEED_FAIL } from '../Constants/FeedContext'
 
